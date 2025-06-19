@@ -1,0 +1,49 @@
+# HACKATHON SUBMISSION - SUMMER ANALYTICS 2025
+# Author: Rakesh Kumar | GitHub: Rakesh-kumar-s | Email: 23pp3010@rgipt.ac.in
+
+# 📦 1. IMPORTING LIBRARIES
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# 📁 2. LOADING DATA
+df = pd.read_csv('your_dataset.csv')  # Replace with actual path
+df.head()
+
+# 🧼 3. DATA CLEANING + PREPROCESSING
+# Example: Handling missing values
+df.fillna(df.mean(), inplace=True)
+
+# Encoding categorical columns (example)
+le = LabelEncoder()
+df['Category'] = le.fit_transform(df['Category'])
+
+# Feature scaling (optional)
+scaler = StandardScaler()
+X = scaler.fit_transform(df.drop('Target', axis=1))
+y = df['Target']
+
+# 📊 4. TRAIN-TEST SPLIT
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 🧠 5. MODEL TRAINING (Example: Logistic Regression)
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# 📈 6. EVALUATION
+y_pred = model.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+
+# 📤 7. FINAL SUBMISSION (Optional if on Kaggle)
+submission = pd.DataFrame({
+    'Id': test_df['Id'],
+    'Predicted': model.predict(test_df_features_scaled)
+})
+submission.to_csv('submission.csv', index=False)
